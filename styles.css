@@ -276,11 +276,15 @@ footer {
 
 .modal-content {
     background: white;
-    width: 70%;               /* slightly narrower */
+    width: 70%;
     max-width: 850px;
-    padding: 25px 30px;       /* reduced from 40px → shorter modal */
+    padding: 25px 30px;
     border-radius: 25px;
     text-align: center;
+    max-height: 80vh;            /* keep modal contained in viewport */
+    overflow-y: auto;            /* scroll internal content when needed */
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Title */
@@ -290,17 +294,97 @@ footer {
     margin-bottom: 15px;      /* reduced spacing */
 }
 
-/* MAIN PROJECT IMAGE (smaller height → modal becomes shorter) */
+/* Viewer (image + video) */
+#modalViewer {
+    width: 100%;
+    margin: 0 auto 12px auto;
+}
+
 #modalImage {
     width: 100%;
-    max-width: 380px;         /* smaller width */
-    max-height: 230px;        /* shorter image height */
+    max-width: none;
+    max-height: 50vh;        /* larger viewer */
     object-fit: contain;
     display: block;
-    margin: 0 auto 18px auto; /* reduced spacing below */
     border-radius: 10px;
 }
 
+#modalVideo {
+    width: 100%;
+    max-width: none;
+    max-height: 50vh;
+    object-fit: contain;
+    display: block;
+    border-radius: 10px;
+}
+
+/* Learning gallery */
+.learning-gallery {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding: 10px 6px;
+    align-items: center;
+    margin-top: 8px;
+    justify-content: flex-start;
+}
+
+.learning-thumb {
+    position: relative;
+    width: 160px;
+    height: 100px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.learning-thumb.active {
+    border-color: #ffdc00;
+    transform: scale(1.03);
+}
+
+.learning-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.video-play {
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 6px 8px;
+    border-radius: 50%;
+    font-size: 14px;
+}
+
+/* scrollbar styling */
+.learning-gallery::-webkit-scrollbar {
+    height: 6px;
+}
+
+.learning-gallery::-webkit-scrollbar-thumb {
+    background: #bdbdbd;
+    border-radius: 10px;
+}
+
+.gallery-empty {
+    color: #666;
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+.learning-thumb.invalid {
+    opacity: 0.6;
+    filter: grayscale(80%);
+    border-color: #e0a3a3;
+}
 /* Two-column layout */
 .modal-columns {
     display: flex;
@@ -337,6 +421,17 @@ footer {
     display: flex;
     justify-content: center;
     gap: 20px;
+    position: sticky;         /* keep buttons visible */
+    bottom: 0;
+    padding-top: 10px;
+}
+
+.modal-buttons:before { /* small visual divider when content scrolls */
+    content: "";
+    display: block;
+    height: 1px;
+    background: rgba(0,0,0,0.06);
+    margin-bottom: 8px;
 }
 
 /* CONTACT PAGE HEADER */

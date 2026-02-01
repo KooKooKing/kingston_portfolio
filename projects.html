@@ -43,9 +43,9 @@
             <!-- Design Projects -->
 
             <!-- DESIGN 1 -->
-            <div class="project-card design"
-                data-title="Travel with Travelly (Digital Banner)"
+            <div class="project-card design" data-title="Travel with Travelly (Digital Banner)"
                 data-image="images/travellybanner.png"
+                data-gallery="image::images/travellybanner.png||image::images/instagramgrid.png||video::https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
                 data-rationale="The theme of this banner is 'Travel with Travelly', aiming to promote excitement and exploration of global destinations."
                 data-software="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/2101px-Adobe_Photoshop_CC_icon.svg.png"
                 data-difficulty="1/5"
@@ -57,9 +57,7 @@
             </div>
 
             <!-- DESIGN 2 -->
-            <div class="project-card design"
-                data-title="Instagram Marketing Grid"
-                data-image="images/instagramgrid.png"
+            <div class="project-card design" data-title="Instagram Marketing Grid" data-image="images/instagramgrid.png"
                 data-rationale="This Instagram grid provides a cohesive visual identity for travel marketing through layout design and color theory."
                 data-software="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/2101px-Adobe_Photoshop_CC_icon.svg.png"
                 data-difficulty="2/5"
@@ -71,12 +69,13 @@
             </div>
 
             <!-- DESIGN 3-->
-            <div class="project-card design"
-                data-title="UIUX - Ecommerce Mobile App"
+            <div class="project-card design" data-title="UIUX - Ecommerce Mobile App"
                 data-image="images/instagramgrid.png"
                 data-rationale="This Instagram grid provides a cohesive visual identity for travel marketing through layout design and color theory."
                 data-software="https://miro.medium.com/v2/resize:fit:1400/1*6XgfDCVn81AYX68Xvd2I-g@2x.png"
+                data-difficulty="3/5"
                 data-learning="I learned composition, layout spacing and branding consistency across multiple tiles.">
+
 
                 <img src="images/instagramgrid.png" alt="">
                 <p>UIUX - Ecommerce Mobile App</p>
@@ -86,10 +85,10 @@
 
             <!-- Development/Coding Projects -->
             <!-- DEVELOPMENT 1 -->
-            <div class="project-card development"
-                data-title="Hotel Booking Website"
+            <div class="project-card development" data-title="Hotel Booking Website"
                 data-image="images/hotelbooking.png"
-                data-rationale="A website allowing users to view hotel listings and book rooms using HTML, CSS and JavaScript."
+                data-gallery="image::images/hotelbooking.png||image::images/instagramgrid.png||video::https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+                data-rationale="A website allowing users to view hotel listings and book rooms using HTML, CSS and JavaScript. This was a final assessment team work."
                 data-software="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/2048px-Visual_Studio_Code_1.35_icon.svg.png"
                 data-difficulty="3/5"
                 data-learning="I learned DOM manipulation, responsive design, user flow and basic form validation.">
@@ -103,12 +102,11 @@
 
             <!-- Analytics Projects -->
             <!-- Analytics  -->
-            <div class="project-card analytics"
-                data-title="Business Analytics Dashboard (Tableau)"
+            <div class="project-card analytics" data-title="Business Analytics Dashboard (Tableau)"
                 data-image="images/tableauwork.png"
+                data-gallery="image::images/tableauwork.png||image::images/instagramgrid.png"
                 data-rationale="A dashboard displaying analytics insights such as sales performance, customer segments and trends."
-                data-software="images/tableauwork.png"
-                data-difficulty="3/5"
+                data-software="images/tableauwork.png" data-difficulty="3/5"
                 data-learning="I learned data cleaning, chart selection, interactive filtering and storytelling with data.">
 
                 <img src="images/tableauwork.png" alt="">
@@ -116,13 +114,12 @@
                 <button class="yellow-btn readme-btn">Read Me!</button>
             </div>
 
-            
+
 
             <!-- Immersive Projects -->
             <!-- IMMERSIVE -->
-            <div class="project-card immersive"
-                data-title="VR Escape Room (Unity)"
-                data-image="images/vr.png"
+            <div class="project-card immersive" data-title="VR Escape Room (Unity)" data-image="images/vr.png"
+                data-gallery="image::images/torch.png||image::images/barrel.png||image::images/hammer.png||image::images/chest.png"
                 data-rationale="A VR escape room game built with Unity using puzzle mechanics, lighting, and immersive interactions."
                 data-software="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjCin5lnVSg8gVjRCcYLdcpILbCHRMTjsv9Q&s"
                 data-difficulty="4/5"
@@ -151,8 +148,8 @@
                 cards.forEach(card => {
                     card.style.display =
                         (category === "all" || card.classList.contains(category))
-                        ? "block"
-                        : "none";
+                            ? "block"
+                            : "none";
                 });
             });
         });
@@ -163,7 +160,12 @@
         <div class="modal-content">
 
             <h2 id="modalTitle"></h2>
-            <img id="modalImage" src="">
+            <div id="modalViewer">
+                <img id="modalImage" src="" alt="">
+                <video id="modalVideo" controls style="display:none;"></video>
+            </div>
+
+            <div id="modalGallery" class="learning-gallery" aria-label="Project media gallery"></div>
 
             <div class="modal-columns">
 
@@ -181,6 +183,8 @@
 
                     <h3>What I learned:</h3>
                     <p id="modalLearning"></p>
+
+                    <!-- Gallery moved above to fill modal width -->
                 </div>
             </div>
 
@@ -195,6 +199,61 @@
     <script>
         const modal = document.getElementById("projectModal");
         const closeModal = document.getElementById("closeModal");
+        const modalImage = document.getElementById("modalImage");
+        const modalVideo = document.getElementById("modalVideo");
+        const modalGallery = document.getElementById("modalGallery");
+
+        function clearGallery() {
+            modalGallery.innerHTML = "";
+        }
+
+        function createThumb(item) {
+            const thumb = document.createElement('div');
+            thumb.className = 'learning-thumb';
+            const img = document.createElement('img');
+
+            if (!item.url) {
+                img.src = 'images/image_placeholder.png';
+                thumb.classList.add('invalid');
+            } else {
+                img.src = item.type === 'image' ? item.url : (item.thumb || 'images/video_placeholder.png');
+            }
+
+            img.alt = '';
+            thumb.appendChild(img);
+
+            if (item.type === 'video') {
+                const play = document.createElement('span');
+                play.className = 'video-play';
+                play.innerHTML = '&#9658;';
+                thumb.appendChild(play);
+            }
+
+            thumb.addEventListener('click', () => {
+                if (!item.url) return; // invalid entry
+
+                // set active class
+                modalGallery.querySelectorAll('.learning-thumb').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+
+                if (item.type === 'image') {
+                    modalVideo.pause();
+                    modalVideo.style.display = 'none';
+                    modalImage.style.display = 'block';
+                    modalImage.src = item.url;
+                } else if (item.type === 'video') {
+                    modalImage.style.display = 'none';
+                    modalVideo.style.display = 'block';
+                    modalVideo.src = item.url;
+                    modalVideo.play();
+                }
+
+                // ensure thumbnail is centered in view
+                thumb.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+            });
+
+            modalGallery.appendChild(thumb);
+        }
 
         document.querySelectorAll(".readme-btn").forEach(btn => {
             btn.addEventListener("click", (e) => {
@@ -202,21 +261,70 @@
                 const card = e.target.closest(".project-card");
 
                 document.getElementById("modalTitle").innerText = card.dataset.title;
-                document.getElementById("modalImage").src = card.dataset.image;
+                modalImage.src = card.dataset.image || '';
+                modalImage.style.display = 'block';
+                modalVideo.style.display = 'none';
+
                 document.getElementById("modalRationale").innerText = card.dataset.rationale;
                 document.getElementById("modalSoftware").src = card.dataset.software;
                 document.getElementById("modalDifficulty").innerText = card.dataset.difficulty;
                 document.getElementById("modalLearning").innerText = card.dataset.learning;
 
+                // populate gallery
+                clearGallery();
+                const galleryData = card.dataset.gallery;
+                const parsedItems = [];
+
+                if (galleryData) {
+                    galleryData.split('||').forEach((entry, idx) => {
+                        const parts = entry.split('::').map(p => p.trim());
+                        if (parts.length >= 2) {
+                            const type = parts[0].toLowerCase();
+                            const url = parts[1];
+                            const thumb = parts[2] || null;
+
+                            if ((type === 'image' || type === 'video') && url) {
+                                parsedItems.push({ type, url, thumb });
+                            } else {
+                                console.warn(`Invalid gallery entry for project '${card.dataset.title}' at index ${idx}:`, entry);
+                            }
+                        } else {
+                            console.warn(`Malformed gallery entry for project '${card.dataset.title}' at index ${idx}:`, entry);
+                        }
+                    });
+                }
+
+                if (parsedItems.length) {
+                    parsedItems.forEach(createThumb);
+
+                    // auto-activate first thumbnail so viewer fills modal immediately
+                    const firstThumb = modalGallery.querySelector('.learning-thumb');
+                    if (firstThumb) firstThumb.click();
+
+                } else {
+                    modalGallery.innerHTML = '<div class="gallery-empty">No media available</div>';
+                }
+
                 modal.style.display = "flex";
+                document.querySelector('.modal-content').scrollTop = 0;
             });
         });
 
-        closeModal.onclick = () => modal.style.display = "none";
-
-        window.onclick = (e) => {
-            if (e.target === modal) modal.style.display = "none";
+        closeModal.onclick = () => {
+            modal.style.display = "none";
+            modalVideo.pause();
+            modalVideo.src = '';
+            document.querySelector('.modal-content').scrollTop = 0;
         };
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+                modalVideo.pause();
+                modalVideo.src = '';
+                document.querySelector('.modal-content').scrollTop = 0;
+            }
+        });
     </script>
 
 </body>
