@@ -400,6 +400,14 @@ footer {
     width: 48%;
 }
 
+/* Justify the design rationale text in modal */
+#modalRationale {
+    text-align: left;
+    text-justify: inter-word; /* improves spacing in some browsers */
+    line-height: 1.6;        /* better readability for paragraphs */
+    margin: 0;
+}
+
 /* Section headings */
 .modal-left h3, 
 .modal-right h3 {
